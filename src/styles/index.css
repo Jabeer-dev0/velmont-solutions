@@ -1,0 +1,40 @@
+@import './tokens.css';
+@import './site.css';
+@import './service-detail.css';
+@import './work.css';
+
+/* Suppress default mobile tap flash (blue/grey box on touch) */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch taps should not show keyboard focus rings; :focus-visible rules still apply for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--navy-800);
+  color: #fff;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 16px;
+  outline: 2px solid var(--blue-400);
+  outline-offset: 2px;
+}
+
+#main-content:focus {
+  outline: none;
+}
