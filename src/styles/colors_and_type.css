@@ -1,0 +1,204 @@
+/* ============================================================
+   VELMONT SOLUTIONS — Colors & Type Foundations
+   "Elevating Businesses. Delivering Results."
+   ============================================================
+   Fonts loaded from Google Fonts (see @import below).
+   - Cinzel        → display logotype serif (SUBSTITUTE for the
+                     custom Roman-caps wordmark in the logo — flagged)
+   - Montserrat    → headline / heavy sans
+   - Source Sans 3 → body / UI sans
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,18..72,300;0,18..72,400;0,18..72,500;1,18..72,300;1,18..72,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* ---------- BRAND COLOR PRIMITIVES ---------- */
+  /* Navy — drawn from the logo "V" and dark UI fields */
+  --navy-900: #081532;   /* deepest — footer / capsule fills        */
+  --navy-800: #0E2148;   /* primary navy — headlines, dark sections */
+  --navy-700: #15315F;   /* navy gradient mid                       */
+  --navy-600: #1D3F73;   /* lighter navy                            */
+
+  /* Blue — the energetic brand accent (chart bars, swoosh, links) */
+  --blue-700: #0F47A8;   /* deep royal                              */
+  --blue-600: #1A52C0;   /* PRIMARY brand blue (buttons, accents)   */
+  --blue-500: #2680EB;   /* vivid blue                              */
+  --blue-400: #4FA9F9;   /* bright sky blue (arrows, highlights)    */
+  --blue-300: #8AC4FB;   /* tint                                    */
+  --blue-100: #DCEBFE;   /* pale fill / hover wash                  */
+  --blue-50:  #EEF5FF;   /* lightest wash                           */
+
+  /* Signature gradients */
+  --grad-navy:  linear-gradient(160deg, #15315F 0%, #0E2148 55%, #081532 100%);
+  --grad-blue:  linear-gradient(150deg, #4FA9F9 0%, #2680EB 45%, #1A52C0 100%);
+  --grad-vmix:  linear-gradient(135deg, #0E2148 0%, #1A52C0 70%, #2680EB 100%);
+
+  /* ---------- NEUTRALS ---------- */
+  --white:    #FFFFFF;
+  --paper:    #F6F9FE;   /* page background (cool white)            */
+  --mist:     #EDF2FA;   /* section band fill                       */
+  --line:     #DCE5F2;   /* hairline borders                        */
+  --line-strong: #C3D2E8;
+  --gray-500: #6B7A92;   /* muted text                              */
+  --gray-600: #4F5E76;   /* secondary text                          */
+  --ink:      #1A2740;   /* body text (near-navy)                   */
+
+  /* ---------- SEMANTIC ---------- */
+  --fg-1: var(--navy-800);   /* primary foreground / headings       */
+  --fg-2: var(--ink);        /* body                                */
+  --fg-3: var(--gray-600);   /* secondary                           */
+  --fg-4: var(--gray-500);   /* muted / captions                    */
+  --fg-on-dark: #EAF1FB;     /* text on navy                         */
+  --fg-on-dark-muted: #9FB4D6;
+  --accent: var(--blue-600);
+  --accent-bright: var(--blue-500);
+  --link: var(--blue-600);
+  --bg-page: var(--paper);
+  --bg-surface: var(--white);
+  --bg-band: var(--mist);
+  --border: var(--line);
+
+  --success: #1F9D57;
+  --warning: #E0A800;
+  --danger:  #D64545;
+
+  /* ---------- TYPE FAMILIES ---------- */
+  --font-display: 'Cinzel', 'Trajan Pro', Georgia, serif;   /* logotype / formal display */
+  --font-serif:   'Newsreader', 'Spezia Serif', Georgia, serif; /* editorial display serif (v2) — substitute for Spezia Serif */
+  --font-head:    'Montserrat', 'Arial Narrow', system-ui, sans-serif;
+  --font-body:    'Source Sans 3', system-ui, -apple-system, sans-serif;
+
+  /* ---------- TYPE SCALE (clamped, fluid) ---------- */
+  --fs-display: clamp(48px, 6vw, 84px);
+  --fs-h1: clamp(38px, 4.6vw, 60px);
+  --fs-h2: clamp(28px, 3.2vw, 42px);
+  --fs-h3: clamp(22px, 2.2vw, 28px);
+  --fs-h4: 20px;
+  --fs-lead: clamp(18px, 1.5vw, 22px);
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-caption: 13px;
+  --fs-eyebrow: 13px;
+
+  --lh-tight: 1.05;
+  --lh-head: 1.12;
+  --lh-body: 1.6;
+
+  /* ---------- RADII ---------- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-pill: 999px;
+
+  /* ---------- SHADOWS / ELEVATION ---------- */
+  --sh-sm: 0 1px 2px rgba(14,33,72,.06), 0 1px 3px rgba(14,33,72,.08);
+  --sh-md: 0 4px 14px rgba(14,33,72,.10), 0 2px 6px rgba(14,33,72,.06);
+  --sh-lg: 0 18px 40px rgba(14,33,72,.16), 0 6px 14px rgba(14,33,72,.08);
+  --sh-blue: 0 14px 30px rgba(26,82,192,.32);
+  --ring: 0 0 0 4px rgba(38,128,235,.20);
+
+  /* ---------- SPACING (8px base) ---------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --s-9: 96px; --s-10: 128px;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT DEFAULTS
+   ============================================================ */
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-2);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.display, h1.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: var(--lh-tight);
+  color: var(--navy-800);
+}
+
+h1, .h1 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-head);
+  letter-spacing: -.01em;
+  color: var(--fg-1);
+}
+h2, .h2 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-head);
+  letter-spacing: -.005em;
+  color: var(--fg-1);
+}
+h3, .h3 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  color: var(--fg-1);
+}
+h4, .h4 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: var(--fs-h4);
+  color: var(--fg-1);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--fg-3);
+}
+
+.eyebrow {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+}
+
+/* Letterspaced caps treatment, à la "SOLUTIONS" in the logo */
+.spaced-caps {
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  letter-spacing: .34em;
+  font-weight: 600;
+}
+
+small, .small { font-size: var(--fs-small); color: var(--fg-3); }
+.caption { font-size: var(--fs-caption); color: var(--fg-4); }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--blue-500); }
+
+/* Accent-word highlight used in headlines ("SMARTER SOLUTIONS.") */
+.hl { color: var(--blue-600); }
+
+/* ---------- EDITORIAL SERIF (v2 — "editorial premium" direction) ---------- */
+/* Large, light-weight editorial headlines echoing the Roman-serif logotype.
+   Substitute for "Spezia Serif" seen in the Gourmet reference. */
+.serif-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -.018em;
+  line-height: 1.04;
+  color: var(--navy-800);
+}
+.serif-display em, .serif-italic {
+  font-style: italic;
+  font-weight: 300;
+}
