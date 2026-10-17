@@ -28,3 +28,7 @@ dist-ssr
 *.sw?
 
 .vercel
+
+f*.jpeg
+f*.jpg.bak
+/scripts/fx-*.jpeg
