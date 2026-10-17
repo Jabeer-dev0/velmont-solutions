@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { PillButton } from '../ui/PillButton';
+import { ScrollWords } from '../ui/ScrollWords';
 import { PRIMARY_CTA } from '../../data/seo';
 import { fadeUp, viewOnce } from '../../lib/aboutMotion';
 
@@ -18,7 +19,9 @@ export function PageCta({ content, className = '' }) {
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
       >
         <motion.h2 className="abt-cta__title serif-display" variants={fadeUp} custom={0}>
-          {content.title} <em>{content.titleEm}</em>
+          <ScrollWords start="top 92%" stagger={0.05}>
+            {content.title} <em>{content.titleEm}</em>
+          </ScrollWords>
         </motion.h2>
         <motion.p className="abt-cta__lead" variants={fadeUp} custom={1}>
           {content.lead}

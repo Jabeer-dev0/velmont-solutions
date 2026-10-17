@@ -2,9 +2,11 @@ import { useLayoutEffect } from 'react';
 import {
   animateProcessTimeline,
   animateStatCounters,
+  parallaxColumns,
   parallaxY,
   revealFrom,
   revealStagger,
+  revealWords,
 } from './scrollReveal';
 
 export function useScrollReveal(ref, options = {}) {
@@ -50,4 +52,22 @@ export function useProcessTimeline(sectionRef, gridRef, enabled = true) {
     if (!enabled || !sectionRef.current || !gridRef.current) return undefined;
     return animateProcessTimeline(sectionRef.current, gridRef.current);
   }, [sectionRef, gridRef, enabled]);
+}
+
+export function useRevealWords(ref, options = {}) {
+  const { start, stagger, duration, enabled = true } = options;
+
+  useLayoutEffect(() => {
+    if (!enabled || !ref.current) return undefined;
+    return revealWords(ref.current, { start, stagger, duration });
+  }, [ref, start, stagger, duration, enabled]);
+}
+
+export function useParallaxColumns(ref, options = {}) {
+  const { distance, start, end, enabled = true } = options;
+
+  useLayoutEffect(() => {
+    if (!enabled || !ref.current) return undefined;
+    return parallaxColumns(ref.current, { distance, start, end });
+  }, [ref, distance, start, end, enabled]);
 }

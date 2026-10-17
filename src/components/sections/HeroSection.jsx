@@ -8,7 +8,8 @@ import { heroHeadlines } from '../../data/heroHeadlines';
 import { trustedPartners } from '../../data/partners';
 import { PRIMARY_CTA } from '../../data/seo';
 import { scrollToSection } from '../../lib/scrollTo';
-import { runHomeHeroOpening } from '../../lib/heroOpening';
+import { HERO_OPEN_EVENT, runHomeHeroOpening } from '../../lib/heroOpening';
+import { parallaxY, prefersReducedMotion, scrubFade } from '../../lib/scrollReveal';
 
 export function HeroSection() {
   const sectionRef = useRef(null);
@@ -16,7 +17,37 @@ export function HeroSection() {
   useLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
-    return runHomeHeroOpening(section);
+
+    const closeOpening = runHomeHeroOpening(section);
+
+    if (prefersReducedMotion()) return closeOpening;
+
+    // Content drifts up and fades as the hero leaves the viewport.
+    const closeExit = scrubFade(section.querySelector('.v2-hero__inner'), {
+      trigger: section,
+      start: 'top top',
+      end: 'bottom top',
+      y: 64,
+      opacity: 0,
+    });
+
+    // The chart lags behind for depth - attach after the entrance so both
+    // tweens never fight over the same transform.
+    let closeChart = () => {};
+    const onOpen = () => {
+      closeChart = parallaxY(section.querySelector('.v2-hero__chart'), {
+        y: 200,
+        trigger: section,
+      });
+    };
+    section.addEventListener(HERO_OPEN_EVENT, onOpen, { once: true });
+
+    return () => {
+      section.removeEventListener(HERO_OPEN_EVENT, onOpen);
+      closeChart();
+      closeExit();
+      closeOpening();
+    };
   }, []);
 
   return (

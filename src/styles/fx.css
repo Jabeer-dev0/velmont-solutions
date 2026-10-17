@@ -1,0 +1,139 @@
+/* =========================================================
+   Scroll FX - parallax mosaic, word reveal, 3D tilt cards
+   ========================================================= */
+
+/* ---------- Word-by-word heading reveal ---------- */
+[data-word] {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ---------- Parallax mosaic ---------- */
+.v2-pxl__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+  height: 74vh;
+  max-height: 780px;
+  min-height: 520px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+}
+
+.v2-pxl__col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  will-change: transform;
+}
+
+.v2-pxl__tile {
+  margin: 0;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-md);
+  background: var(--grad-navy);
+}
+
+.v2-pxl__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform .65s cubic-bezier(.22,.61,.36,1);
+}
+
+.v2-pxl__tile:hover .v2-pxl__img {
+  transform: scale(1.045);
+}
+
+/* ---------- 3D tilt + glare cards ---------- */
+[data-tilt] {
+  position: relative;
+  will-change: transform;
+}
+
+[data-tilt]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, .16),
+    transparent 62%
+  );
+}
+
+[data-tilt].is-tilting {
+  z-index: 2;
+}
+
+[data-tilt].is-tilting::after {
+  opacity: 1;
+}
+
+/* Dark cards get a cooler glare so it reads on navy */
+.v2-bento__card--navy[data-tilt]::after,
+.v2-bento__feature[data-tilt]::after,
+.wrk-card[data-tilt]::after {
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(140, 190, 255, .18),
+    transparent 62%
+  );
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .v2-pxl__grid {
+    grid-template-columns: repeat(2, 1fr);
+    height: 560px;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .v2-pxl__col:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .v2-pxl__grid {
+    gap: 14px;
+    height: 440px;
+    margin-top: 34px;
+  }
+
+  .v2-pxl__col {
+    gap: 14px;
+  }
+
+  .v2-pxl__tile {
+    border-radius: 14px;
+  }
+}
+
+/* Reduced motion: the mosaic stays a calm static grid */
+@media (prefers-reduced-motion: reduce) {
+  [data-word] {
+    will-change: auto;
+  }
+
+  .v2-pxl__col {
+    will-change: auto;
+  }
+
+  .v2-pxl__img,
+  [data-tilt]::after {
+    transition: none;
+  }
+}

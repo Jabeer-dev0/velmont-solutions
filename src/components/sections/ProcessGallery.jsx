@@ -2,8 +2,9 @@ import { useRef } from 'react';
 import { PhoneCall, SearchCheck, Rocket, LineChart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { SectionLabel } from '../ui/SectionLabel';
 import { ChipIcon } from '../ui/ChipIcon';
+import { ScrollWords } from '../ui/ScrollWords';
 import { processSteps } from '../../data/site';
-import { useProcessTimeline, useScrollReveal } from '../../lib/useScrollReveal';
+import { useProcessTimeline, useScrollReveal, useScrollRevealStagger } from '../../lib/useScrollReveal';
 
 const stepIcons = {
   PhoneCall,
@@ -18,7 +19,12 @@ export function ProcessGallery() {
   const headLeftRef = useRef(null);
   const headAsideRef = useRef(null);
 
-  useScrollReveal(headLeftRef, { variant: 'slide-left', start: 'top 85%' });
+  useScrollRevealStagger(headLeftRef, {
+    targets: '.v2-label',
+    variant: 'slide-left',
+    stagger: 0.08,
+    start: 'top 85%',
+  });
   useScrollReveal(headAsideRef, { variant: 'slide-right', delay: 0.08, start: 'top 85%' });
   useProcessTimeline(sectionRef, trackRef);
 
@@ -33,11 +39,11 @@ export function ProcessGallery() {
       <div className="v2-shead v2-process__head">
         <div ref={headLeftRef}>
           <SectionLabel>How we work</SectionLabel>
-          <h2 className="serif-display v2-shead__title">
+          <ScrollWords as="h2" className="serif-display v2-shead__title" start="top 85%">
             A clear path from <em>hello</em>
             <br />
             to growth.
-          </h2>
+          </ScrollWords>
         </div>
         <div className="v2-process__head-aside" ref={headAsideRef}>
           <p className="v2-shead__sub">

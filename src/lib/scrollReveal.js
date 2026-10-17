@@ -425,6 +425,101 @@ export function heroEntrance(root, steps) {
   return () => ctx.revert();
 }
 
+/**
+ * Word-by-word heading reveal (scroll-triggered).
+ * Expects [data-word] spans inside the element - see ScrollWords component.
+ */
+export function revealWords(el, options = {}) {
+  if (!el || prefersReducedMotion()) return () => {};
+
+  const { start = 'top 88%', stagger = 0.042, duration = 0.6 } = options;
+  const words = [...el.querySelectorAll('[data-word]')];
+  if (!words.length) return () => {};
+
+  const ctx = gsap.context(() => {
+    gsap.set(words, { yPercent: 65, autoAlpha: 0 });
+    gsap.to(words, {
+      yPercent: 0,
+      autoAlpha: 1,
+      duration,
+      stagger,
+      ease: 'power3.out',
+      scrollTrigger: scrollTriggerConfig(el, start),
+    });
+  }, el);
+
+  return () => ctx.revert();
+}
+
+/**
+ * Opposing vertical drift for grid columns - parallax mosaic.
+ * Mark columns with [data-pxl-col]; desktop only.
+ */
+export function parallaxColumns(container, options = {}) {
+  if (!container || prefersReducedMotion()) return () => {};
+
+  const { distance = 90, start = 'top bottom', end = 'bottom top' } = options;
+  const mm = gsap.matchMedia();
+
+  mm.add('(min-width: 921px)', () => {
+    const cols = [...container.querySelectorAll('[data-pxl-col]')];
+    cols.forEach((col, index) => {
+      const dir = index % 2 === 0 ? -1 : 1;
+      gsap.fromTo(
+        col,
+        { y: dir * distance },
+        {
+          y: dir * -distance,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container,
+            start,
+            end,
+            scrub: 1,
+            fastScrollEnd: true,
+          },
+        },
+      );
+    });
+  });
+
+  return () => mm.revert();
+}
+
+/**
+ * Scroll-scrubbed exit for a block while its section leaves the viewport.
+ * Content drifts up and fades - the classic hero scroll-out.
+ */
+export function scrubFade(el, options = {}) {
+  if (!el || prefersReducedMotion()) return () => {};
+
+  const {
+    y = 64,
+    opacity = 0,
+    trigger,
+    start = 'top top',
+    end = 'bottom top',
+    scrub = 0.6,
+  } = options;
+
+  const ctx = gsap.context(() => {
+    gsap.to(el, {
+      y: -y,
+      autoAlpha: opacity,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: trigger ?? el,
+        start,
+        end,
+        scrub,
+        fastScrollEnd: true,
+      },
+    });
+  }, el);
+
+  return () => ctx.revert();
+}
+
 /** Subtle scroll-linked parallax for backgrounds. */
 export function parallaxY(el, options = {}) {
   if (!el || prefersReducedMotion()) return () => {};

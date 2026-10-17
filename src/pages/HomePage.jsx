@@ -4,6 +4,7 @@ import { HeroSection } from '../components/sections/HeroSection';
 import { ServicesBento } from '../components/sections/ServicesBento';
 import { ShowcaseSection } from '../components/sections/ShowcaseSection';
 import { ProcessGallery } from '../components/sections/ProcessGallery';
+import { ParallaxShowcase } from '../components/sections/ParallaxShowcase';
 import { PricingSection } from '../components/sections/PricingSection';
 import { FaqSection } from '../components/sections/FaqSection';
 import { PageCta } from '../components/sections/PageCta';
@@ -18,6 +19,7 @@ export function HomePage() {
         <ServicesBento />
         <ShowcaseSection />
         <ProcessGallery />
+        <ParallaxShowcase />
         <PricingSection />
         <FaqSection />
         <PageCta content={homeCta} />

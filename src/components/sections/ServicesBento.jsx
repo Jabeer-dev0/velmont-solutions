@@ -5,9 +5,11 @@ import { SectionLabel } from '../ui/SectionLabel';
 import { GlassBadge } from '../ui/GlassBadge';
 import { ChipIcon } from '../ui/ChipIcon';
 import { SectionImage } from '../ui/SectionImage';
+import { ScrollWords } from '../ui/ScrollWords';
 import { services, bentoCards, miniRowIndices } from '../../data/services';
 import { site } from '../../data/site';
 import { useScrollReveal, useScrollRevealStagger } from '../../lib/useScrollReveal';
+import { useTilt3d } from '../../lib/useTilt3d';
 
 const featured = services.find((s) => s.featured);
 
@@ -17,19 +19,25 @@ export function ServicesBento() {
   const bentoRef = useRef(null);
   const miniRef = useRef(null);
 
-  useScrollReveal(headLeftRef, { variant: 'slide-left', start: 'top 90%' });
+  useScrollRevealStagger(headLeftRef, {
+    targets: '.v2-label',
+    variant: 'slide-left',
+    stagger: 0.08,
+    start: 'top 90%',
+  });
   useScrollReveal(headRightRef, { variant: 'slide-right', delay: 0.08, start: 'top 90%' });
   useScrollRevealStagger(bentoRef, { variant: 'scale-up', stagger: 0.1, start: 'top 88%' });
   useScrollRevealStagger(miniRef, { variant: 'fade-up-sm', stagger: 0.07, start: 'top 92%' });
+  useTilt3d(bentoRef);
 
   return (
     <section className="v2-section" id="services">
       <div className="v2-shead">
         <div ref={headLeftRef}>
           <SectionLabel>What we do</SectionLabel>
-          <h2 className="serif-display v2-shead__title">
+          <ScrollWords as="h2" className="serif-display v2-shead__title" start="top 90%">
             Complete growth solutions, <em>under one roof.</em>
-          </h2>
+          </ScrollWords>
         </div>
         <p className="v2-shead__sub" ref={headRightRef}>
           We design and run the systems that bring restaurants more customers, more revenue
@@ -38,7 +46,11 @@ export function ServicesBento() {
       </div>
 
       <div className="v2-bento" ref={bentoRef}>
-        <Link to={`/services/${featured.slug}`} className="v2-bento__feature v2-bento__feature--link">
+        <Link
+          to={`/services/${featured.slug}`}
+          className="v2-bento__feature v2-bento__feature--link"
+          data-tilt=""
+        >
           <SectionImage
             src={site.images.servicesFeature}
             alt="Social media marketing for restaurants: plated dish in warm dining light"
@@ -62,6 +74,7 @@ export function ServicesBento() {
               key={svc.slug}
               to={`/services/${svc.slug}`}
               className={`v2-bento__card v2-bento__card--${slot}${svc.bentoNavy ? ' v2-bento__card--navy' : ''} v2-bento__card--link`}
+              data-tilt=""
             >
               <ChipIcon icon={svc.icon} tone={svc.bentoNavy ? 'light' : 'blue'} />
               <h3>{svc.name}</h3>

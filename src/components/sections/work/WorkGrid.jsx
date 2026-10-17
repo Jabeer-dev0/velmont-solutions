@@ -4,9 +4,11 @@ import { MapPin, Star } from 'lucide-react';
 import gsap from 'gsap';
 import { SectionLabel } from '../../ui/SectionLabel';
 import { SectionImage } from '../../ui/SectionImage';
+import { ScrollWords } from '../../ui/ScrollWords';
 import { workFilters, workGridCases, workSections } from '../../../data/work';
 import { prefersReducedMotion } from '../../../lib/scrollReveal';
 import { useScrollReveal, useScrollRevealStagger } from '../../../lib/useScrollReveal';
+import { useTilt3d } from '../../../lib/useTilt3d';
 import { CaseSparkline } from './CaseSparkline';
 import { getCaseSparkline } from '../../../data/workCaseSparklines';
 
@@ -45,7 +47,12 @@ export function WorkGrid() {
     [activeFilter],
   );
 
-  useScrollReveal(headRef, { variant: 'fade-up', start: 'top 90%' });
+  useScrollRevealStagger(headRef, {
+    targets: '.v2-label',
+    variant: 'fade-up',
+    stagger: 0.08,
+    start: 'top 90%',
+  });
   useScrollReveal(filtersRef, { variant: 'fade-up-sm', delay: 0.06, start: 'top 90%' });
   useScrollRevealStagger(gridRef, {
     variant: 'scale-up',
@@ -54,6 +61,7 @@ export function WorkGrid() {
     targets: '.wrk-card',
     rememberKey: 'work-grid-cards',
   });
+  useTilt3d(gridRef, { selector: '.wrk-card', max: 4, lift: 3 });
 
   useLayoutEffect(() => {
     if (skipFilterMotion.current) {
@@ -91,9 +99,14 @@ export function WorkGrid() {
     <section className="wrk-grid v2-section v2-section--band" aria-labelledby="wrk-grid-title">
       <div className="wrk-grid__head" ref={headRef}>
         <SectionLabel>{gridCopy.label}</SectionLabel>
-        <h2 id="wrk-grid-title" className="wrk-grid__title serif-display">
+        <ScrollWords
+          as="h2"
+          id="wrk-grid-title"
+          className="wrk-grid__title serif-display"
+          start="top 90%"
+        >
           {gridCopy.title} <em>{gridCopy.titleEm}</em>
-        </h2>
+        </ScrollWords>
       </div>
 
       <div className="wrk-grid__filters" ref={filtersRef} role="tablist" aria-label="Filter case studies">

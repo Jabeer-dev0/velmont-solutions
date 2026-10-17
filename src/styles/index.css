@@ -2,6 +2,7 @@
 @import './site.css';
 @import './service-detail.css';
 @import './work.css';
+@import './fx.css';
 
 /* Suppress default mobile tap flash (blue/grey box on touch) */
 html {

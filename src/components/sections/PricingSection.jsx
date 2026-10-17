@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Check, ArrowUpRight } from 'lucide-react';
 import { SectionLabel } from '../ui/SectionLabel';
 import { PillButton } from '../ui/PillButton';
+import { ScrollWords } from '../ui/ScrollWords';
 import { plans, pricingIntro, pricingAssurances } from '../../data/pricing';
 import { useScrollReveal, useScrollRevealStagger } from '../../lib/useScrollReveal';
 
@@ -12,7 +13,12 @@ export function PricingSection() {
   const plansRef = useRef(null);
   const footerRef = useRef(null);
 
-  useScrollReveal(headLeftRef, { variant: 'slide-left', start: 'top 90%' });
+  useScrollRevealStagger(headLeftRef, {
+    targets: '.v2-label',
+    variant: 'slide-left',
+    stagger: 0.08,
+    start: 'top 90%',
+  });
   useScrollReveal(headRightRef, { variant: 'slide-right', delay: 0.08, start: 'top 90%' });
   useScrollRevealStagger(plansRef, { variant: 'scale-up', stagger: 0.12, start: 'top 88%' });
   useScrollReveal(footerRef, { variant: 'fade-up-sm', start: 'top 94%' });
@@ -22,9 +28,9 @@ export function PricingSection() {
       <div className="v2-shead">
         <div ref={headLeftRef}>
           <SectionLabel>Pricing</SectionLabel>
-          <h2 className="serif-display v2-shead__title">
+          <ScrollWords as="h2" className="serif-display v2-shead__title" start="top 90%">
             Flexible plans for every <em>restaurant.</em>
-          </h2>
+          </ScrollWords>
         </div>
         <p className="v2-shead__sub" ref={headRightRef}>
           {pricingIntro.sub}
