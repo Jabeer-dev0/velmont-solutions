@@ -84,7 +84,27 @@ const tilt = await page.evaluate(() => {
 check('tilt applies perspective transform', /perspective/.test(tilt.style), tilt.style.slice(0, 90));
 check('tilt adds glare state', tilt.tilting === true);
 
-// --- 5. Work page title word reveal ---
+// --- 5. 3D scroll stage: device starts tilted, rotates flat on scroll ---
+// rotateX drives m23/m32 (-sin / sin); m.b (m12) is always 0 for pure rotateX.
+await page.evaluate(() => document.querySelector('.v3-stage').scrollIntoView({ behavior: 'instant' }));
+await page.waitForTimeout(600);
+const stageTilted = await page.evaluate(() => {
+  const card = document.querySelector('[data-stage3d-card]');
+  const m = new DOMMatrix(getComputedStyle(card).transform);
+  return Math.round(Math.abs(m.m23) * 1000) / 1000; // |sin(rotateX)|
+});
+await page.evaluate(() => window.scrollBy({ top: 700, behavior: 'instant' }));
+await page.waitForTimeout(1200);
+const stageFlat = await page.evaluate(() => {
+  const card = document.querySelector('[data-stage3d-card]');
+  const m = new DOMMatrix(getComputedStyle(card).transform);
+  return Math.round(Math.abs(m.m23) * 1000) / 1000;
+});
+check('3D stage starts tilted', stageTilted > 0.2, `sinX=${stageTilted}`);
+check('3D stage rotates flat on scroll', stageFlat < stageTilted - 0.1, `sinX ${stageTilted}→${stageFlat}`);
+await page.screenshot({ path: 'fx-4-stage3d.jpeg', type: 'jpeg', quality: 72 });
+
+// --- 6. Work page title word reveal ---
 await page.goto(`${BASE}/work`, { waitUntil: 'networkidle' });
 await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
 const workHidden = await page.evaluate(() =>

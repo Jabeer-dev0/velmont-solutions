@@ -26,7 +26,7 @@ export function ServicesBento() {
     start: 'top 90%',
   });
   useScrollReveal(headRightRef, { variant: 'slide-right', delay: 0.08, start: 'top 90%' });
-  useScrollRevealStagger(bentoRef, { variant: 'scale-up', stagger: 0.1, start: 'top 88%' });
+  useScrollRevealStagger(bentoRef, { variant: 'tilt-in', stagger: 0.1, start: 'top 88%' });
   useScrollRevealStagger(miniRef, { variant: 'fade-up-sm', stagger: 0.07, start: 'top 92%' });
   useTilt3d(bentoRef);
 

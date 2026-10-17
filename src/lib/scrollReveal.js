@@ -25,6 +25,14 @@ export const REVEAL = {
   'slide-right': { x: 36, autoAlpha: 0 },
   'scale-up': { scale: 0.97, autoAlpha: 0 },
   'scale-in': { scale: 0.97, autoAlpha: 0 },
+  'tilt-in': {
+    rotateX: 18,
+    y: 40,
+    scale: 0.97,
+    autoAlpha: 0,
+    transformPerspective: 900,
+    transformOrigin: '50% 100%',
+  },
 };
 
 const EASE = 'power2.out';
@@ -71,6 +79,7 @@ export function revealFrom(el, options = {}) {
       y: 0,
       x: 0,
       scale: 1,
+      rotateX: 0,
       autoAlpha: 1,
       duration,
       delay,
@@ -112,6 +121,7 @@ export function revealStagger(container, options = {}) {
       y: 0,
       x: 0,
       scale: 1,
+      rotateX: 0,
       autoAlpha: 1,
       duration,
       stagger,
